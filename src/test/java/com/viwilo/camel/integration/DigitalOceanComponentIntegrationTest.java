@@ -1,9 +1,6 @@
 package com.viwilo.camel.integration;
 
-import com.myjeeva.digitalocean.pojo.Account;
-import com.myjeeva.digitalocean.pojo.Action;
-import com.myjeeva.digitalocean.pojo.Droplet;
-import com.myjeeva.digitalocean.pojo.Tag;
+import com.myjeeva.digitalocean.pojo.*;
 import com.viwilo.camel.constants.DigitalOceanHeaders;
 import com.viwilo.camel.constants.DigitalOceanOperations;
 import org.apache.camel.EndpointInject;
@@ -18,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-@Ignore("Must be manually tested. Provide your own oAuthToken")
+//@Ignore("Must be manually tested. Provide your own oAuthToken")
 public class DigitalOceanComponentIntegrationTest extends DigitalOceanTestSupport {
 
     @Override
@@ -116,6 +113,38 @@ public class DigitalOceanComponentIntegrationTest extends DigitalOceanTestSuppor
                         .to("digitalocean://tags?oAuthToken={{oAuthToken}}")
                         .to("mock:result");
 
+                from("direct:getImages")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.list))
+                        .to("digitalocean://images?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
+
+                from("direct:getImage")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.get))
+                        .setHeader(DigitalOceanHeaders.DROPLET_IMAGE, constant("ubuntu-14-04-x64"))
+                        .to("digitalocean://images?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
+
+                from("direct:getSizes")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.list))
+                        .to("digitalocean://sizes?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
+
+                from("direct:getSize")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.get))
+                        .setHeader(DigitalOceanHeaders.NAME, constant("512mb"))
+                        .to("digitalocean://sizes?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
+
+                from("direct:getRegions")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.list))
+                        .to("digitalocean://regions?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
+
+                from("direct:getRegion")
+                        .setHeader(DigitalOceanHeaders.OPERATION, constant(DigitalOceanOperations.get))
+                        .setHeader(DigitalOceanHeaders.NAME, constant("nyc1"))
+                        .to("digitalocean://regions?oAuthToken={{oAuthToken}}")
+                        .to("mock:result");
             }
         };
     }
@@ -174,7 +203,7 @@ public class DigitalOceanComponentIntegrationTest extends DigitalOceanTestSuppor
     }
 
 
-    //@Test
+    @Test
     public void testCreateDroplet() throws Exception {
         mockResultEndpoint.expectedMinimumMessageCount(1);
 
@@ -189,7 +218,7 @@ public class DigitalOceanComponentIntegrationTest extends DigitalOceanTestSuppor
 
     }
 
-    //@Test
+    @Test
     public void testCreateMultipleDroplets() throws Exception {
         mockResultEndpoint.expectedMinimumMessageCount(1);
 
@@ -242,5 +271,53 @@ public class DigitalOceanComponentIntegrationTest extends DigitalOceanTestSuppor
         assertMockEndpointsSatisfied();
         assertEquals(((List<Tag>)exchange.getOut().getBody()).get(0).getName(), "tag1");
     }
+
+    @Test
+    public void getImages() throws Exception {
+        mockResultEndpoint.expectedMinimumMessageCount(1);
+
+        Exchange exchange = template.request("direct:getImages", null);
+
+        assertMockEndpointsSatisfied();
+        List<Image> images = (List<Image>)exchange.getOut().getBody();
+        assertNotEquals(images.size(), 1);
+    }
+
+    @Test
+    public void getImage() throws Exception {
+        mockResultEndpoint.expectedMinimumMessageCount(1);
+
+        Exchange exchange = template.request("direct:getImage", null);
+
+        assertMockEndpointsSatisfied();
+        assertEquals((exchange.getOut().getBody(Image.class)).getSlug(), "ubuntu-14-04-x64");
+
+    }
+
+    @Test
+    public void getSizes() throws Exception {
+        mockResultEndpoint.expectedMinimumMessageCount(1);
+
+        Exchange exchange = template.request("direct:getSizes", null);
+
+        assertMockEndpointsSatisfied();
+        List<Size> sizes = (List<Size>)exchange.getOut().getBody();
+        System.out.println(sizes);
+        assertNotEquals(sizes.size(), 1);
+    }
+
+
+    @Test
+    public void getRegions() throws Exception {
+        mockResultEndpoint.expectedMinimumMessageCount(1);
+
+        Exchange exchange = template.request("direct:getRegions", null);
+
+        assertMockEndpointsSatisfied();
+        List<Region> regions = (List<Region>)exchange.getOut().getBody();
+        System.out.println(regions);
+        assertNotEquals(regions.size(), 1);
+    }
+
 
 }
