@@ -19,7 +19,7 @@ where `endpoint` is a DigitalOcean resource type.
 Example : to list your droplets:
 
 ```
-digitalocean://droplets?operation=list&oAuthToken=XXXXXX
+digitalocean://droplets?operation=list&oAuthToken=XXXXXX&page=1&perPage=10
 ```
 
 The DigitalOcean component only supports producer endpoints so you cannot use this component at the beginning of a route to listen to messages in a channel.
@@ -52,6 +52,9 @@ You have to provide the `digitalOceanClient` in the Registry or your `oAuthToken
 | `operation` | String | `operation=list` | The operation to perform to the resource. It can also be set with the  `CamelDigitalOceanOperation` Message header. |
 | `oAuthToken` | String |  | Your DigitalOcean oAuth token. |
 | `digitalOceanClient` | `com.myjeeva.digitalocean.DigitalOcean` | Reference to a `com.myjeeva.digitalocean.DigitalOcean` in the Registry. |
+| `page` | Integer | `page=3` | Can be used for `list` operations, for pagination. Force the page number.|
+| `perPage` | Integer | `perPage=50` | Can be used for `list` operations, for pagiantion. Set the number of item per request. |
+
 
 You have to provide an **operation** value for each endpoint, with the `operation` URI option or the `CamelDigitalOceanOperation` message header.
 
@@ -204,10 +207,48 @@ DigitalOcean REST API encapsulated by camel-digitalocean component is subjected 
 
 ## Examples
 
+Get your account info
 
 ```
 from("direct:getAccountInfo")
     .setHeader(DigitalOceanConstants.OPERATION, constant(DigitalOceanOperations.get))
     .to("digitalocean:account?oAuthToken=XXXXXX")
+```
+
+Create a droplet
+
+```
+from("direct:createDroplet")
+    .setHeader(DigitalOceanConstants.OPERATION, constant("create"))
+    .setHeader(DigitalOceanHeaders.NAME, constant("myDroplet"))
+    .setHeader(DigitalOceanHeaders.REGION, constant("fra1"))
+    .setHeader(DigitalOceanHeaders.DROPLET_IMAGE, constant("ubuntu-14-04-x64"))
+    .setHeader(DigitalOceanHeaders.DROPLET_SIZE, constant("512mb"))
+    .to("digitalocean:droplet?oAuthToken=XXXXXX")
+```
+
+List all your droplets
+
+```
+from("direct:getDroplets")
+    .setHeader(DigitalOceanConstants.OPERATION, constant("list"))
+    .to("digitalocean:droplets?oAuthToken=XXXXXX")
+```
+
+Retrieve information for the Droplet (dropletId = 34772987)
+
+```
+from("direct:getDroplet")
+    .setHeader(DigitalOceanConstants.OPERATION, constant("get"))
+    .setHeader(DigitalOceanConstants.ID, 34772987)
+    .to("digitalocean:droplet?oAuthToken=XXXXXX")
+```
+
+Shutdown  information for the Droplet (dropletId = 34772987)
+
+```
+from("direct:shutdown")
+    .setHeader(DigitalOceanConstants.ID, 34772987)
+    .to("digitalocean:droplet?operation=shutdown&oAuthToken=XXXXXX")
 ```
 
