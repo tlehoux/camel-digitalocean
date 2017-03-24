@@ -81,7 +81,7 @@ public class DigitalOceanConfiguration {
     }
 
     /**
-     * Use for paginsation. Set the number of item per request. The maximum number of results per page is 200.
+     * Use for pagination. Set the number of item per request. The maximum number of results per page is 200.
      */
     public Integer getPerPage() {
         return perPage;
