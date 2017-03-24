@@ -183,6 +183,7 @@ public class DigitalOceanDropletsProducer extends DigitalOceanProducer {
         exchange.getOut().setBody(delete);
     }
 
+    @SuppressWarnings("unchecked")
     private void createDroplet(Exchange exchange) throws Exception {
         Message in = exchange.getIn();
 
@@ -204,7 +205,6 @@ public class DigitalOceanDropletsProducer extends DigitalOceanProducer {
             throw new IllegalArgumentException(DigitalOceanHeaders.DROPLET_IMAGE + " must be specified");
 
         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(DigitalOceanHeaders.DROPLET_KEYS))) {
-            @SuppressWarnings("unchecked")
             List<String> keys = (List<String>) exchange.getIn().getHeader(DigitalOceanHeaders.DROPLET_KEYS);
             droplet.setKeys(keys.stream().map(Key::new).collect(Collectors.toList()));
         }
@@ -214,6 +214,9 @@ public class DigitalOceanDropletsProducer extends DigitalOceanProducer {
 
         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(DigitalOceanHeaders.DROPLET_ENABLE_IPV6)))
             droplet.setEnableIpv6(in.getHeader(DigitalOceanHeaders.DROPLET_ENABLE_IPV6, Boolean.class));
+
+        if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(DigitalOceanHeaders.DROPLET_ENABLE_PRIVATE_NETWORKING)))
+            droplet.setEnablePrivateNetworking(in.getHeader(DigitalOceanHeaders.DROPLET_ENABLE_PRIVATE_NETWORKING, Boolean.class));
 
         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(DigitalOceanHeaders.DROPLET_USER_DATA)))
             droplet.setUserData(in.getHeader(DigitalOceanHeaders.DROPLET_USER_DATA, String.class));
