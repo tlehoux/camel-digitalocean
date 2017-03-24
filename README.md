@@ -83,26 +83,123 @@ DigitalOcean REST API encapsulated by camel-digitalocean component is subjected 
 | operation | Description | Headers | Result |
 | ------ | ---- | ------- | ----------- |
 | `list` | list all of the Block Storage volumes available on your account |  | `List<com.myjeeva.digitalocean.pojo.Volume>`  |
-| `get` | show information about a Block Storage volume| `CamelDigitalOceanId`| `com.myjeeva.digitalocean.pojo.Volume`  |
-| `get` | show information about a Block Storage volume by name| `CamelDigitalOceanName` `CamelDigitalOceanRegion`| `com.myjeeva.digitalocean.pojo.Volume`  |
-| `listSnapshots` | retrieve the snapshots that have been created from a volume | `CamelDigitalOceanId` | `List<com.myjeeva.digitalocean.pojo.Snapshot>`  |
-| `create` | create a new volume | `CamelDigitalOceanVolumeSizeGigabytes` `CamelDigitalOceanName` `CamelDigitalOceanDescription` `CamelDigitalOceanRegion`| `com.myjeeva.digitalocean.pojo.Volume`  |
-| `delete` | delete a Block Storage volume, destroying all data and removing it from your account| `CamelDigitalOceanId`| `com.myjeeva.digitalocean.pojo.Delete`|
-| `delete` | delete a Block Storage volume by name| `CamelDigitalOceanName` `CamelDigitalOceanRegion`| `com.myjeeva.digitalocean.pojo.Delete`
-| `attach` | attach a Block Storage volume to a Droplet| `CamelDigitalOceanId`  `CamelDigitalOceanDropletId` `CamelDigitalOceanDropletRegion`| `com.myjeeva.digitalocean.pojo.Action`
-| `attach` | attach a Block Storage volume to a Droplet by name| `CamelDigitalOceanName`  `CamelDigitalOceanDropletId` `CamelDigitalOceanDropletRegion`| `com.myjeeva.digitalocean.pojo.Action`
-| `detach` | detach a Block Storage volume from a Droplet| `CamelDigitalOceanId`  `CamelDigitalOceanDropletId` `CamelDigitalOceanDropletRegion`| `com.myjeeva.digitalocean.pojo.Action`
-| `attach` | detach a Block Storage volume from a Droplet by name| `CamelDigitalOceanName`  `CamelDigitalOceanDropletId` `CamelDigitalOceanDropletRegion`| `com.myjeeva.digitalocean.pojo.Action`
-| `resize` | resize a Block Storage volume | `CamelDigitalOceanVolumeSizeGigabytes` `CamelDigitalOceanRegion`| `com.myjeeva.digitalocean.pojo.Action`  |
-| `listActions` | retrieve all actions that have been executed on a volume | `CamelDigitalOceanId` | `List<com.myjeeva.digitalocean.pojo.Action>`  |
-
+| `get` | show information about a Block Storage volume| `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Volume`  |
+| `get` | show information about a Block Storage volume by name| `CamelDigitalOceanName` _String_ <br>`CamelDigitalOceanRegion` _String_| `com.myjeeva.digitalocean.pojo.Volume`  |
+| `listSnapshots` | retrieve the snapshots that have been created from a volume | `CamelDigitalOceanId` _Integer_| `List<com.myjeeva.digitalocean.pojo.Snapshot>`  |
+| `create` | create a new volume | `CamelDigitalOceanVolumeSizeGigabytes`  _Integer_<br>`CamelDigitalOceanName` _String_<br>`CamelDigitalOceanDescription`* _String_<br>`CamelDigitalOceanRegion`* _String_| `com.myjeeva.digitalocean.pojo.Volume`  |
+| `delete` | delete a Block Storage volume, destroying all data and removing it from your account| `CamelDigitalOceanId`  _Integer_| `com.myjeeva.digitalocean.pojo.Delete`|
+| `delete` | delete a Block Storage volume by name| `CamelDigitalOceanName` _String_<br>`CamelDigitalOceanRegion` _String_| `com.myjeeva.digitalocean.pojo.Delete`
+| `attach` | attach a Block Storage volume to a Droplet| `CamelDigitalOceanId`  _Integer_ <br>`CamelDigitalOceanDropletId`  _Integer_<br>`CamelDigitalOceanDropletRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`
+| `attach` | attach a Block Storage volume to a Droplet by name| `CamelDigitalOceanName` _String_<br>`CamelDigitalOceanDropletId`  _Integer_<br>`CamelDigitalOceanDropletRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`
+| `detach` | detach a Block Storage volume from a Droplet| `CamelDigitalOceanId`  _Integer_ <br>`CamelDigitalOceanDropletId`  _Integer_<br>`CamelDigitalOceanDropletRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`
+| `attach` | detach a Block Storage volume from a Droplet by name| `CamelDigitalOceanName` _String_<br>`CamelDigitalOceanDropletId`  _Integer_<br>`CamelDigitalOceanDropletRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`
+| `resize` | resize a Block Storage volume | `CamelDigitalOceanVolumeSizeGigabytes`  _Integer_<br>`CamelDigitalOceanRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `listActions` | retrieve all actions that have been executed on a volume | `CamelDigitalOceanId`  _Integer_| `List<com.myjeeva.digitalocean.pojo.Action>`  |
 
 ## Droplets endpoint
 
 | operation | Description | Headers | Result |
 | ------ | ---- | ------- | ----------- |
 | `list` | list all Droplets in your account |  | `List<com.myjeeva.digitalocean.pojo.Droplet>`  |
-| `get` | show an individual droplet | `CamelDigitalOceanId` | `com.myjeeva.digitalocean.pojo.Droplet`  |
+| `get` | show an individual droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Droplet`  |
+| `create` | create a new Droplet | `CamelDigitalOceanName` _String_ <br>`CamelDigitalOceanDropletImage` _String_ <br>`CamelDigitalOceanRegion` _String_ <br>`CamelDigitalOceanDropletSize` _String_ <br>`CamelDigitalOceanDropletSSHKeys`* _List\<String\>_ <br>`CamelDigitalOceanDropletEnableBackups`* _Boolean_ <br>`CamelDigitalOceanDropletEnableIpv6`* _Boolean_ <br>`CamelDigitalOceanDropletEnablePrivateNetworking`* _Boolean_ <br>`CamelDigitalOceanDropletUserData`* _String_ <br>`CamelDigitalOceanDropletVolumes`* _List\<String\>_ <br>`CamelDigitalOceanDropletTags` _List\<String\>_| `com.myjeeva.digitalocean.pojo.Droplet`  |
+| `create` | create multiple Droplets | `CamelDigitalOceanNames` _List\<String\>_ <br>`CamelDigitalOceanDropletImage` _String_ <br>`CamelDigitalOceanRegion` _String_ <br>`CamelDigitalOceanDropletSize` _String_ <br>`CamelDigitalOceanDropletSSHKeys`* _List\<String\>_ <br>`CamelDigitalOceanDropletEnableBackups`* _Boolean_ <br>`CamelDigitalOceanDropletEnableIpv6`* _Boolean_ <br>`CamelDigitalOceanDropletEnablePrivateNetworking`* _Boolean_ <br>`CamelDigitalOceanDropletUserData`* _String_ <br>`CamelDigitalOceanDropletVolumes`* _List\<String\>_ <br>`CamelDigitalOceanDropletTags` _List\<String\>_| `com.myjeeva.digitalocean.pojo.Droplet`  |
+| `delete` | delete a Droplet, | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Delete`  |
+| `enableBackups` | enable backups on an existing Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `disableBackups` | disable backups on an existing Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `enableIpv6` | enable IPv6 networking on an existing Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `enablePrivateNetworking` | enable private networking on an existing Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `reboot` | reboot a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `powerCycle` | power cycle a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `shutdown` | shutdown a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `powerOff` | power off a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `powerOn` | power on a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `restore` | shutdown a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanImageId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `passwordReset` | reset the password for a Droplet | `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `resize` | resize a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanDropletSize` _String_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `rebuild` | rebuild a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanImageId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `rename` | rename a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `changeKernel` | change the kernel of a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanKernelId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `takeSnapshot` | snapshot a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName`* _String_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `tag` | tag a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Response`  |
+| `untag` | untag a Droplet | `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Response`  |
+| `listKernels` | retrieve a list of all kernels available to a Droplet | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Kernel>`  |
+| `listSnapshots` | retrieve the snapshots that have been created from a Droplet | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Snapshot>`  |
+| `listBackups` |  retrieve any backups associated with a Droplet | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Backup>`  |
+| `listActions` |  retrieve all actions that have been executed on a Droplet | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Action>`  |
+| `listNeighbors` |  retrieve a list of droplets that are running on the same physical server | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Droplet>`  |
+| `listAllNeighbors` |  retrieve a list of any droplets that are running on the same physical hardware | | `List<com.myjeeva.digitalocean.pojo.Droplet>`  |
+
+## Images endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` | list images available on your account | `CamelDigitalOceanType`* _DigitalOceanImageTypes_ | `List<com.myjeeva.digitalocean.pojo.Image>`  |
+| `ownList` | retrieve only the private images of a user | | `List<com.myjeeva.digitalocean.pojo.Image>`  |
+| `listActions` |  retrieve all actions that have been executed on a Image | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.Action>`  |
+| `get` | retrieve information about an image (public or private) by id| `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Image`  |
+| `get` | retrieve information about an public image by slug| `CamelDigitalOceanDropletImage` _String_| `com.myjeeva.digitalocean.pojo.Image`  |
+| `update` | update an image| `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Image`  |
+| `delete` | delete an image| `CamelDigitalOceanId` _Integer_ | `com.myjeeva.digitalocean.pojo.Delete`  |
+| `transfer` | transfer an image to another region| `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanRegion` _String_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `convert` | convert an image, for example, a backup to a snapshot| `CamelDigitalOceanId` _Integer_ | `com.myjeeva.digitalocean.pojo.Action`  |
+
+## Snapshots endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` | list all of the snapshots available on your account | `CamelDigitalOceanType`* _DigitalOceanSnapshotTypes_ | `List<com.myjeeva.digitalocean.pojo.Snapshot>`  |
+| `get` | retrieve information about a snapshot| `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Snapshot`  |
+| `delete` | delete an snapshot| `CamelDigitalOceanId` _Integer_ | `com.myjeeva.digitalocean.pojo.Delete`  |
+
+
+## Keys endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` |  list all of the keys in your account | | `List<com.myjeeva.digitalocean.pojo.Key>`  |
+| `get` | retrieve information about a key by id| `CamelDigitalOceanId` _Integer_| `com.myjeeva.digitalocean.pojo.Key`  |
+| `get` | retrieve information about a key by fingerprint| `CamelDigitalOceanKeyFingerprint` _String_| `com.myjeeva.digitalocean.pojo.Key`  |
+| `update` | update a key by id| `CamelDigitalOceanId` _Integer_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Key`  |
+| `update` | update a key by fingerprint| `CamelDigitalOceanKeyFingerprint` _String_ <br>`CamelDigitalOceanName` _String_| `com.myjeeva.digitalocean.pojo.Key`  |
+| `delete` | delete a key by id| `CamelDigitalOceanId` _Integer_ | `com.myjeeva.digitalocean.pojo.Delete`  |
+| `delete` | delete a key by fingerprint| `CamelDigitalOceanKeyFingerprint` _String_ | `com.myjeeva.digitalocean.pojo.Delete`  |
+
+## Regions endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` |  list all of the regions that are available | | `List<com.myjeeva.digitalocean.pojo.Region>`  |
+
+
+## Sizes endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` |  list all of the sizes that are available | | `List<com.myjeeva.digitalocean.pojo.Size>`  |
+
+## Floating IPs endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` |  list all of the Floating IPs available on your account | | `List<com.myjeeva.digitalocean.pojo.FloatingIP>`  |
+| `create` |  create a new Floating IP assigned to a Droplet | `CamelDigitalOceanId` _Integer_ | `List<com.myjeeva.digitalocean.pojo.FloatingIP>`  |
+| `create` |  create a new Floating IP assigned to a Region | `CamelDigitalOceanRegion` _String_ | `List<com.myjeeva.digitalocean.pojo.FloatingIP>`  |
+| `get` | retrieve information about a Floating IP| `CamelDigitalOceanFloatingIPAddress` _String_| `com.myjeeva.digitalocean.pojo.Key`  |
+| `delete` | delete a Floating IP and remove it from your account| `CamelDigitalOceanFloatingIPAddress` _String_| `com.myjeeva.digitalocean.pojo.Delete`  |
+| `assign` | assign a Floating IP to a Droplet| `CamelDigitalOceanFloatingIPAddress` _String_ <br>`CamelDigitalOceanDropletId` _Integer_| `com.myjeeva.digitalocean.pojo.Action`  |
+| `unassign` | unassign a Floating IP | `CamelDigitalOceanFloatingIPAddress` _String_ | `com.myjeeva.digitalocean.pojo.Action`  |
+| `listActions` |  retrieve all actions that have been executed on a Floating IP | `CamelDigitalOceanFloatingIPAddress` _String_ | `List<com.myjeeva.digitalocean.pojo.Action>`  |
+
+## Tags endpoint
+
+| operation | Description | Headers | Result |
+| ------ | ---- | ------- | ----------- |
+| `list` |  list all of your tags | | `List<com.myjeeva.digitalocean.pojo.Tag>`  |
+| `create` |  create a Tag | `CamelDigitalOceanName` _String_ | `com.myjeeva.digitalocean.pojo.Tag`  |
+| `get` |  retrieve an individual tag | `CamelDigitalOceanName` _String_ | `com.myjeeva.digitalocean.pojo.Tag`  |
+| `delete` |  delete a tag | `CamelDigitalOceanName` _String_ | `com.myjeeva.digitalocean.pojo.Delete`  |
+| `update` |  update a tag | `CamelDigitalOceanName` _String_ <br>`CamelDigitalOceanNewName` _String_| `com.myjeeva.digitalocean.pojo.Tag`  |
 
 
 ## Examples
